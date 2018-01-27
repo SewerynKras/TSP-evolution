@@ -1,19 +1,7 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 from random import randrange
 import time
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
-
-
-# Generate First population
-
-# In[2]:
-
 
 def firstPopulation(size,target,genes):
     pop=[]
@@ -24,12 +12,6 @@ def firstPopulation(size,target,genes):
         pop.append(current)
     return pop
 
-
-# Rate how good is the population
-
-# In[3]:
-
-
 def ratePopulation(population,target):
     newPopulation = []
     for i in range(len(population)):
@@ -39,12 +21,6 @@ def ratePopulation(population,target):
             if (current[idx]==target[idx]): score+=1
         newPopulation.append([current,score])
     return sorted(newPopulation,key = lambda newPopulation: newPopulation[1],reverse = True)
-
-
-# Breed the best individuals to generate a new population
-
-# In[4]:
-
 
 def breed(population,mutationChance,genes,target):
     evolvedPopulation = []
@@ -65,12 +41,6 @@ def breed(population,mutationChance,genes,target):
     #evolvedPopulation.append(mutate(newBaby,mutationChance,genes))
     return evolvedPopulation
 
-
-# Random mutation chance
-
-# In[5]:
-
-
 def mutate(individual,chance,genes):
     newbaby = ''
     for i in range(len(individual)):
@@ -79,10 +49,6 @@ def mutate(individual,chance,genes):
             newbaby+=genes[randrange(0,len(genes))]
         else:newbaby += individual[i]
     return individual
-
-
-# In[31]:
-
 
 def evolutionSimulator(populationSize,mutationChance,genes,target):
     startTime = float(time.time())
@@ -133,10 +99,6 @@ def evolutionSimulator(populationSize,mutationChance,genes,target):
             axes.set_ylabel("Points")
             axes.legend()
            #fig.savefig("Example.png",dpi=300)
-
-
-# In[32]:
-
 
 evolutionSimulator(1000,60,"qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890","what does this even do lets be honest")
 
