@@ -3,7 +3,7 @@ import time
 import matplotlib.pyplot as plt
 
 #Create the first population
-def firstPopulation(populationSize,target,genes):
+def _firstPopulation(populationSize,target,genes):
     pop=[]
     for i in range(populationSize):
         current = ""
@@ -13,7 +13,7 @@ def firstPopulation(populationSize,target,genes):
     return pop
 
 #Give every individual a rating and sort the population
-def ratePopulation(population,target):
+def _ratePopulation(population,target):
     newPopulation = []
     for i in range(len(population)):
         current = population[i]
@@ -25,7 +25,7 @@ def ratePopulation(population,target):
     return sorted(newPopulation,key = lambda newPopulation: newPopulation[1],reverse = True) #sort by the second argument
 
 #Kill half the population with a slight gradient (to increase gene diversity)
-def naturalSelection(population,gradientChance):
+def _naturalSelection(population,gradientChance):
 	half = int(len(population)/2)
 	newPopulation = []
 	for idx in range(half):
@@ -37,7 +37,7 @@ def naturalSelection(population,gradientChance):
 	return newPopulation
 
 #Let the remaining individuals breed and create the next generation
-def breed(population,mc,gen):
+def _breed(population,mc,gen):
 	evolvedPopulation = []
 	for i in range(0,len(population),2):
 		first = population[i][0]
@@ -50,13 +50,13 @@ def breed(population,mc,gen):
 					baby += first[idx]
 				else :
 					baby += second[idx]
-			evolvedPopulation.append(mutate(baby,mc,gen))
+			evolvedPopulation.append(_mutate(baby,mc,gen))
 		evolvedPopulation.append(first)
 		evolvedPopulation.append(second)
 	return evolvedPopulation
 
 #Randmly change genes to increase gene diversity
-def mutate(individual,mutationChance,genes):
+def _mutate(individual,mutationChance,genes):
     newbaby = ''
     for i in range(len(individual)):
         luck = randrange(0,100)
@@ -67,7 +67,7 @@ def mutate(individual,mutationChance,genes):
     return newbaby
 
 #Display the results in a nice graph 
-def displayGraph (best,average,worse,save,gen):
+def _displayGraph (best,average,worse,save,gen):
 	fig = plt.figure()
 	axes = fig.add_axes([0.1,0.1,0.9,0.9])
 	axes.set_xlabel("Generation")
@@ -93,8 +93,8 @@ def evolutionSimulator(Target,
 		SaveGraph=False):
 
 	startTime = float(time.time()) #use it later to measure time
-	population = firstPopulation(PopulationSize,Target,Genes)
-	population = ratePopulation(population,Target)
+	population = _firstPopulation(PopulationSize,Target,Genes)
+	population = _ratePopulation(population,Target)
 	score = len(Target)
 	print ("Starting the experiment now. {} random individuals have been created.".format(PopulationSize))
 	generation=0
@@ -104,9 +104,9 @@ def evolutionSimulator(Target,
 	found = False
 	while(not found):
 		generation += 1
-		population = naturalSelection(population,GradientChance)
-		population = breed(population,MutationChance,Genes)
-		population = ratePopulation(population,Target)
+		population = _naturalSelection(population,GradientChance)
+		population = _breed(population,MutationChance,Genes)
+		population = _ratePopulation(population,Target)
 		if DisplayResults == True : 
 			print("Best gen {}:\t{}\t score:{}/{}\t time elapsed: {}s".format(generation,population[0][0],population[0][1],score,
 	                                                                   "%.2f"% (time.time()-startTime)))
@@ -119,13 +119,13 @@ def evolutionSimulator(Target,
 			found = True
 			print ('It took {} generations and {} seconds for the experiment to end successfully!'.format
 				(generation,"%.2f"% (time.time()-startTime)))
-			displayGraph(best,mid,worst,SaveGraph,generation)
+			_displayGraph(best,mid,worst,SaveGraph,generation)
         
 		#if time ran out
 		elif time.time()-startTime >TimeLimit:
 			found = True
 			print ("Perfection too hard to achieve in the given time.The experiment has been stopped")
-			displayGraph(best,mid,worst,SaveGraph,generation)
+			_displayGraph(best,mid,worst,SaveGraph,generation)
 #Test
 #evolutionSimulator("Design must be simple. Elegant. Implementation, less so.",DisplayResults=True,SaveGraph=True)
 
