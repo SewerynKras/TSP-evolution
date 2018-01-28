@@ -127,4 +127,5 @@ def evolutionSimulator( Target,
 			print ("\nPerfection too hard to achieve in the given time.The experiment has been stopped")
 			displayGraph(best,mid,worst,SaveGraph,generation)
 #Test
-evolutionSimulator("Lets make this one a bit harder hehe",DisplayResults=True,SaveGraph=True)
+#evolutionSimulator("This is just a test",DisplayResults=True,SaveGraph=True)
+
