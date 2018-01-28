@@ -69,17 +69,18 @@ def mutate(individual,mutationChance,genes):
 
 def displayGraph (best,average,worse,save,gen):
 	fig = plt.figure()
-	axes = fig.add_axes([0,0,1,1])
+	axes = fig.add_axes([0.1,0.1,0.9,0.9])
 	axes.set_xlabel("Generation")
 	axes.set_ylabel("Points")
 	axes.plot(range(gen),worse, label = "Worst", color = "#FF66B2",lw=2) 
 	axes.plot(range(gen),average, label = "Average",color = "#CCCC00",lw=2)
 	axes.plot(range(gen),best,label = "Best",color = "#00CC66",lw=2)
 	axes.legend()
-	plt.show()
 	if save == True : 
 		lc = time.localtime(time.time())
-		fig.savefig("{}_{}_{}_{}_{}.png".format(lc.tm_year,lc.tm_mon,lc.tm_day,lc.tm_hour,lc.tm_min),dpi=300)
+		fig.savefig("{}_{}_{}_{}_{}.png".format(lc.tm_year,lc.tm_mon,lc.tm_mday,lc.tm_hour,lc.tm_min),dpi=300)
+	plt.show()
+
 
 #The function you actually call :P
 def evolutionSimulator( Target,
@@ -126,4 +127,4 @@ def evolutionSimulator( Target,
 			print ("\nPerfection too hard to achieve in the given time.The experiment has been stopped")
 			displayGraph(best,mid,worst,SaveGraph,generation)
 #Test
-#evolutionSimulator("Lets make this one a bit harder hehe",DisplayResults=True)
+evolutionSimulator("Lets make this one a bit harder hehe",DisplayResults=True,SaveGraph=True)
