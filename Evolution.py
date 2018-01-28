@@ -66,7 +66,7 @@ def mutate(individual,mutationChance,genes):
         	newbaby += individual[i]
     return newbaby
 
-
+#Display the results in a nice graph 
 def displayGraph (best,average,worse,save,gen):
 	fig = plt.figure()
 	axes = fig.add_axes([0.1,0.1,0.9,0.9])
@@ -78,25 +78,25 @@ def displayGraph (best,average,worse,save,gen):
 	axes.legend()
 	if save == True : 
 		lc = time.localtime(time.time())
-		fig.savefig("{}_{}_{}_{}_{}.png".format(lc.tm_year,lc.tm_mon,lc.tm_mday,lc.tm_hour,lc.tm_min),dpi=300)
+		fig.savefig("{}_{:02}_{:02}_{:02}_{:02}.png".format(lc.tm_year,lc.tm_mon,lc.tm_mday,lc.tm_hour,lc.tm_min),dpi=300)
 	plt.show()
 
 
 #The function you actually call :P
-def evolutionSimulator( Target,
-				PopulationSize=1000,
-				MutationChance=10,
-				Genes="qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890",
-				GradientChance=5,
-				DisplayResults=False,
-				TimeLimit=600,
-				SaveGraph=False):
+def evolutionSimulator(Target,
+		PopulationSize=1000,
+		MutationChance=10,
+		Genes="qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890",
+		GradientChance=5,
+		DisplayResults=False,
+		TimeLimit=600,
+		SaveGraph=False):
 
 	startTime = float(time.time()) #use it later to measure time
 	population = firstPopulation(PopulationSize,Target,Genes)
 	population = ratePopulation(population,Target)
 	score = len(Target)
-	print ("Starting the experiment now. {} random individuals have been created.\n".format(PopulationSize))
+	print ("Starting the experiment now. {} random individuals have been created.".format(PopulationSize))
 	generation=0
 	best = [] #collect data about the best individuals
 	mid = [] #collect data about average individuals
@@ -117,15 +117,15 @@ def evolutionSimulator( Target,
 		#if we got it
 		if population[0][1]==score:
 			found = True
-			print ('\nIt took {} generations and {} seconds for the experiment to end successfully!'.format
+			print ('It took {} generations and {} seconds for the experiment to end successfully!'.format
 				(generation,"%.2f"% (time.time()-startTime)))
 			displayGraph(best,mid,worst,SaveGraph,generation)
         
-        #if time ran out
+		#if time ran out
 		elif time.time()-startTime >TimeLimit:
 			found = True
-			print ("\nPerfection too hard to achieve in the given time.The experiment has been stopped")
+			print ("Perfection too hard to achieve in the given time.The experiment has been stopped")
 			displayGraph(best,mid,worst,SaveGraph,generation)
 #Test
-#evolutionSimulator("This is just a test",DisplayResults=True,SaveGraph=True)
+#evolutionSimulator("Design must be simple. Elegant. Implementation, less so.",DisplayResults=True,SaveGraph=True)
 
