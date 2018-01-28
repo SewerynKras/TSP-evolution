@@ -84,14 +84,14 @@ def displayGraph (best,average,worse,save,gen):
 
 #The function you actually call :P
 def evolutionSimulator( Target,
-						PopulationSize=1000,
-						MutationChance=10,
-						Genes="qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890",
-						GradientChance=5,
-						DisplayResults=False,
-						TimeLimit=600,
-						SaveGraph=False):
-	
+				PopulationSize=1000,
+				MutationChance=10,
+				Genes="qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890",
+				GradientChance=5,
+				DisplayResults=False,
+				TimeLimit=600,
+				SaveGraph=False):
+
 	startTime = float(time.time()) #use it later to measure time
 	population = firstPopulation(PopulationSize,Target,Genes)
 	population = ratePopulation(population,Target)
