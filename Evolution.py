@@ -4,25 +4,25 @@ import matplotlib.pyplot as plt
 
 #Create the first population
 def _firstPopulation(populationSize,target,genes):
-    pop=[]
-    for i in range(populationSize):
-        current = ""
-        for idx in range(len(target)):
-            current += genes[randrange(0,len(genes))]
-        pop.append(current)
-    return pop
+	population=[]
+	for i in range(populationSize):
+		current = ""
+		for idx in range(len(target)):
+			current += genes[randrange(0,len(genes))]
+		population.append(current)
+	return population
 
 #Give every individual a rating and sort the population
 def _ratePopulation(population,target):
-    newPopulation = []
-    for i in range(len(population)):
-        current = population[i]
-        score = 0
-        for idx in range(len(current)):
-            if (current[idx]==target[idx]):
-             score+=1
-        newPopulation.append([current,score])
-    return sorted(newPopulation,key = lambda newPopulation: newPopulation[1],reverse = True) #sort by the second argument
+	newPopulation = []
+	for i in range(len(population)):
+		current = population[i]
+		score = 0
+		for idx in range(len(current)):
+			if (current[idx]==target[idx]):
+				score+=1
+		newPopulation.append([current,score])
+	return sorted(newPopulation,key = lambda newPopulation: newPopulation[1],reverse = True) #sort by the second argument
 
 #Kill half the population with a slight gradient (to increase gene diversity)
 def _naturalSelection(population,gradientChance):
@@ -57,14 +57,14 @@ def _breed(population,mc,gen):
 
 #Randmly change genes to increase gene diversity
 def _mutate(individual,mutationChance,genes):
-    newbaby = ''
-    for i in range(len(individual)):
-        luck = randrange(0,100)
-        if luck < mutationChance:
-            newbaby += genes[randrange(0,len(genes))]
-        else:
-        	newbaby += individual[i]
-    return newbaby
+	newbaby = ''
+	for i in range(len(individual)):
+		luck = randrange(0,100)
+		if luck < mutationChance:
+			newbaby += genes[randrange(0,len(genes))]
+		else:
+			newbaby += individual[i]
+	return newbaby
 
 #Display the results in a nice graph 
 def _displayGraph (best,average,worse,save,gen):
@@ -81,7 +81,6 @@ def _displayGraph (best,average,worse,save,gen):
 		fig.savefig("{}_{:02}_{:02}_{:02}_{:02}.png".format(lc.tm_year,lc.tm_mon,lc.tm_mday,lc.tm_hour,lc.tm_min),dpi=300)
 	plt.show()
 
-
 #The function you actually call :P
 def evolutionSimulator(Target,
 		PopulationSize=1000,
@@ -97,35 +96,32 @@ def evolutionSimulator(Target,
 	population = _ratePopulation(population,Target)
 	score = len(Target)
 	print ("Starting the experiment now. {} random individuals have been created.".format(PopulationSize))
-	generation=0
+	generation = 0
 	best = [] #collect data about the best individuals
 	mid = [] #collect data about average individuals
 	worst = [] #collect data about the worst individuals    
 	found = False
-	while(not found):
+	while(not found) :
 		generation += 1
 		population = _naturalSelection(population,GradientChance)
 		population = _breed(population,MutationChance,Genes)
 		population = _ratePopulation(population,Target)
 		if DisplayResults == True : 
-			print("Best gen {}:\t{}\t score:{}/{}\t time elapsed: {}s".format(generation,population[0][0],population[0][1],score,
+			print("Best gen {:03}:\t{}\t score:{:02}/{:02}\t time elapsed: {}s".format(generation,population[0][0],population[0][1],score,
 	                                                                   "%.2f"% (time.time()-startTime)))
 		best.append(population[0][1])
 		mid.append(population[int(PopulationSize/2)][1])
 		worst.append(population[PopulationSize-1][1])
 
 		#if we got it
-		if population[0][1]==score:
+		if population[0][1] == score :
 			found = True
 			print ('It took {} generations and {} seconds for the experiment to end successfully!'.format
 				(generation,"%.2f"% (time.time()-startTime)))
 			_displayGraph(best,mid,worst,SaveGraph,generation)
-        
+
 		#if time ran out
-		elif time.time()-startTime >TimeLimit:
+		elif time.time() - startTime > TimeLimit :
 			found = True
 			print ("Perfection too hard to achieve in the given time.The experiment has been stopped")
 			_displayGraph(best,mid,worst,SaveGraph,generation)
-#Test
-#evolutionSimulator("Design must be simple. Elegant. Implementation, less so.",DisplayResults=True,SaveGraph=True)
-

@@ -1,3 +1,3 @@
 import Evolution
 
-Evolution.evolutionSimulator("Design must be simple. Elegant. Implementation, less so.",DisplayResults=True)
+Evolution.evolutionSimulator("Krystian wynocha.",DisplayResults=True)
