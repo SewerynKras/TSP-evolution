@@ -3,12 +3,11 @@ import time
 import matplotlib
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 from matplotlib.figure import Figure
-from numpy import arange, sin, pi
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 import matplotlib.pyplot as plt
 from kivy.garden.matplotlib import FigureCanvasKivyAgg
-from matplotlib.transforms import Bbox
+
 fig = plt.figure()
 canvas = fig.canvas
 class Display(App):
@@ -17,8 +16,6 @@ class Display(App):
 		box.add_widget(canvas)
 		canvas.draw()
 		return box
-
-
 
 #Create the first population
 def _firstPopulation(populationSize,target,genes):
@@ -86,18 +83,16 @@ def _mutate(individual,mutationChance,genes):
 
 #Display the results in a nice graph 
 def _displayGraph (best,average,worse,save,gen):
-
 	axes = fig.add_axes([0.1,0.1,0.9,0.9])
 	axes.set_xlabel("Generation")
 	axes.set_ylabel("Points")
-	axes.plot(range(gen),worse, label = "Worst", color = "#E24D4D",lw=2) 
-	axes.plot(range(gen),average, label = "Average",color = "#E7E72E",lw=2)
-	axes.plot(range(gen),best,label = "Best",color = "#48F127",lw=2)
+	axes.plot(range(gen),worse, label = "Worst", color = "#E24D4D",lw=5) 
+	axes.plot(range(gen),average, label = "Average",color = "#E7E72E",lw=5)
+	axes.plot(range(gen),best,label = "Best",color = "#48F127",lw=5)
 	axes.legend()
 	if save == True : 
 		lc = time.localtime(time.time())
 		fig.savefig("{}_{:02}_{:02}_{:02}_{:02}.png".format(lc.tm_year,lc.tm_mon,lc.tm_mday,lc.tm_hour,lc.tm_min),dpi=300)
-	#plt.show()
 	Display().run()
 
 #The function you actually call :P
