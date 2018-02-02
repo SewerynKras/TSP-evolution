@@ -23,67 +23,39 @@ btn1 = Button(text="Next",size_hint = [.1,1])
 btn10 = Button(text="Jump 10",size_hint = [.1,1])
 btn100 = Button(text="Jump 100",size_hint = [.1,1])
 
-def refresh(instance):
-	global gen,label,btn1,generation
-	if gen + 1<= generation:
-		fig.clf()
-		gen +=1
-		axes = fig.add_axes([0.1,0.1,0.9,0.9])
-		axes.set_xlabel("Generation")
-		axes.set_ylabel("Points")
-		label.text = "Generation:{}".format(gen)
-		axes.plot(range(gen),best[0:gen], label = "Best", color = "#4DE289",lw=5)
-		axes.plot(range(gen),mid[0:gen], label = "Average", color = "#E8FF26",lw=5)
-		axes.plot(range(gen),worst[0:gen], label = "Worst", color = "#DF1F1F",lw=5)
-		canvas.draw_idle()
-	else:
-		btn1.text = ""
-def refresh10(instance):
-	global gen,label,btn10,generation
-	if gen + 10<= generation:
-		fig.clf()
-		gen +=10
-		axes = fig.add_axes([0.1,0.1,0.9,0.9])
-		axes.set_xlabel("Generation")
-		axes.set_ylabel("Points")
-		label.text = "Generation:{}".format(gen)
-		axes.plot(range(gen),best[0:gen], label = "Best", color = "#4DE289",lw=5)
-		axes.plot(range(gen),mid[0:gen], label = "Average", color = "#E8FF26",lw=5)
-		axes.plot(range(gen),worst[0:gen], label = "Worst", color = "#DF1F1F",lw=5)
-		canvas.draw_idle()
-	else:
-		btn10.text = ""
-def refresh100(instance):
-	global gen,label,btn100,generation
-	if gen + 100 <= generation:
-		fig.clf()
-		gen +=100
-		axes = fig.add_axes([0.1,0.1,0.9,0.9])
-		axes.set_xlabel("Generation")
-		axes.set_ylabel("Points")
-		label.text = "Generation:{}".format(gen)
-		axes.plot(range(gen),best[0:gen], label = "Best", color = "#4DE289",lw=5)
-		axes.plot(range(gen),mid[0:gen], label = "Average", color = "#E8FF26",lw=5)
-		axes.plot(range(gen),worst[0:gen], label = "Worst", color = "#DF1F1F",lw=5)
-		canvas.draw_idle()
-	else:
-		btn100.text = ""
+
 class Display(App):
 	def build(self):
 		main_layout = BoxLayout()
 		main_layout.orientation = "vertical"
 		box = BoxLayout(padding = 10, size_hint = [1,.1])
-		btn1.bind(on_press=refresh)
+		btn1.bind(on_press=refresh(1))
 		box.add_widget(btn1)
 		box.add_widget(btn10)
-		btn10.bind(on_press =refresh10)
+		btn10.bind(on_press =refresh(10))
 		box.add_widget(btn100)
-		btn100.bind(on_press =refresh100)
+		btn100.bind(on_press =refresh(100))
 		box.add_widget(label)
 		main_layout.add_widget(box)
 		main_layout.add_widget(canvas)
 		canvas.draw_idle()
 		return main_layout
+	def refresh(self,number = 1):
+		global gen,label,btn1,generation
+		if gen + 1<= generation:
+			fig.clf()
+			gen += number
+			axes = fig.add_axes([0.1,0.1,0.9,0.9])
+			axes.set_xlabel("Generation")
+			axes.set_ylabel("Points")
+			label.text = "Generation:{}".format(gen)
+			axes.plot(range(gen),best[0:gen], label = "Best", color = "#4DE289",lw=5)
+			axes.plot(range(gen),mid[0:gen], label = "Average", color = "#E8FF26",lw=5)
+			axes.plot(range(gen),worst[0:gen], label = "Worst", color = "#DF1F1F",lw=5)
+			canvas.draw_idle()
+		else:
+			btn1.text = ""
+
 
 #Create the first population
 def _firstPopulation(populationSize,target,genes):
