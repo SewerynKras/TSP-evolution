@@ -1,3 +1,3 @@
 import Evolution
 
-Evolution.evolutionSimulator("Krystian wynocha.",DisplayResults=True)
+Evolution.evolutionSimulator("Hello I'm Mirror 2.0 hi there :D",DisplayResults=True)
