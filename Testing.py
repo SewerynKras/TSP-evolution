@@ -1,3 +1,3 @@
 import Evolution
 
-Evolution.evolutionSimulator("Hello I'm Mirror 2.0 hi there :D",DisplayResults=True)
+Evolution.evolutionSimulator("Lets try to make a longer sentence for this software to evolve into. I wanna see how much time it takes",DisplayResults=True)
