@@ -2,7 +2,7 @@ from random import randrange
 import time
 #import matplotlib.pyplot as plt
 #Create the first population
-genes="qwertyuiopasdfghjklzxcvbnm?!'.,QWERTYUIOPASDFGHJKLZXCVBNM 1234567890:"
+genes="aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPrRsStTuUvVwWxXyYzZ12345678!?,.'=+-/()*# "
 def _firstPopulation(populationSize,target):
 	population=[]
 	for i in range(populationSize):
